@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="com.ibsys.toolshed.contractmanager.domain.Contract" table="CM_CONTRACT">
+		<id name="contractId" type="java.lang.Integer" unsaved-value="0">
+            <column name="CONTRACT_ID" />
+            <generator class="increment" />
+        </id>
+        <property name="ioNumber" type="java.lang.Integer">
+            <column name="IO_NUMBER" length="10" not-null="false" unique="true" />
+        </property>
+        <property name="contractName" type="java.lang.String">
+            <column name="CONTRACT_NAME" length="240" not-null="false" unique="true" />
+        </property>
+		<property name="startDate" type="java.sql.Timestamp">
+			<column name="START_DATE" sql-type="timestamp" />
+		</property>
+		<property name="endDate" type="java.sql.Timestamp">
+			<column name="END_DATE" sql-type="timestamp" />
+		</property>
+		<property name="advertiserName" type="java.lang.String">
+			<column name="ADVERTISER_NAME" />
+		</property>
+    </class>
+
+</hibernate-mapping>

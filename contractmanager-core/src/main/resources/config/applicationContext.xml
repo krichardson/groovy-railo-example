@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName"><value>org.hsqldb.jdbcDriver</value></property>
+		<property name="url" value="jdbc:hsqldb:mem:pps"/>
+        <property name="username" value="sa"/>
+		<property name="password" value=""/>
+    </bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+
+    	<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+    	<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+			</props>
+        </property>
+
+     	<property name="mappingResources">
+			<list>
+           		<value>/hibernate/Contract.hbm.xml</value>
+			</list>
+      	</property>
+
+    </bean>
+
+
+	<bean id="contractDao" class="com.ibsys.toolshed.contractmanager.dao.ContractDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="contractService" class="com.ibsys.toolshed.contractmanager.services.ContractService">
+		<property name="contractDao"><ref bean="contractDao" /></property>
+	</bean>
+
+</beans>
